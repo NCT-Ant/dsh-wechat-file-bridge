@@ -1,0 +1,27 @@
+name: release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: 语法自检
+        run: node --check index.js
+      - name: 读取版本
+        id: ver
+        run: echo "version=$(node -p \"require('./package.json').version\")" >> "$GITHUB_OUTPUT"
+      - name: 打包
+        run: |
+          mkdir -p dist
+          zip -r "dist/dsh-wechat-file-bridge-${{ steps.ver.outputs.version }}.zip" index.js cordis.patch.yml package.json README.md LICENSE assets
+      - name: 发布 Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create "v${{ steps.ver.outputs.version }}" dist/*.zip --title "v${{ steps.ver.outputs.version }}" --generate-notes
