@@ -1,0 +1,4 @@
+- insert:
+    - id: dsh-wechat-file-bridge
+      name: dsh-wechat-file-bridge
+      config: {}

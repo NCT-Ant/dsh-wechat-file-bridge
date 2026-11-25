@@ -1,0 +1,11 @@
+# dependencies
+node_modules/
+
+# build / release artifacts
+dist/
+*.zip
+
+# local scratch
+*.log
+channel-test.txt
+trace-*.png

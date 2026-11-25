@@ -1,0 +1,48 @@
+{
+  "name": "dsh-wechat-file-bridge",
+  "version": "1.0.0",
+  "description": "Bridge DeepSeek Harness to the WeChat desktop client's file-transfer-helper chat: pull files sent from your phone, push files and messages back.",
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "assets/WechatBridge.ps1",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "wechat",
+    "weixin",
+    "file-transfer",
+    "windows"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "os": [
+    "win32"
+  ],
+  "license": "MIT",
+  "author": "Benzalkonium chloride",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NCT-Ant/dsh-wechat-file-bridge.git"
+  },
+  "homepage": "https://github.com/NCT-Ant/dsh-wechat-file-bridge#readme",
+  "bugs": {
+    "url": "https://github.com/NCT-Ant/dsh-wechat-file-bridge/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
