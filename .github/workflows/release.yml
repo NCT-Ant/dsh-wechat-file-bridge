@@ -1,27 +1,43 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
       - name: Check syntax
         run: node --check index.js
+
       - name: Read version
         id: ver
         run: 'echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"'
+
       - name: Build bundle archive
         run: |
           mkdir -p dist
           zip -r "dist/dsh-wechat-file-bridge-${{ steps.ver.outputs.version }}.zip" \
             index.js cordis.patch.yml package.json README.md LICENSE assets
+
       - name: Clean previous release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh release delete "v${{ steps.ver.outputs.version }}" --yes --cleanup-tag=false || true
+
       - name: Publish release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
